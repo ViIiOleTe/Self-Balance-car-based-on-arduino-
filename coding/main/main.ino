@@ -10,6 +10,7 @@
 int PWM = 0;
 int SCA = Start_PWMA;
 int SCB = Start_PWMB;
+unsigned long lastSend = 0;
 
 void setup() {
   // put your setup code here, to run once:
@@ -23,15 +24,16 @@ void setup() {
 
 void loop() {
   //keyboard control speed
-  serial_Debug();
+
+  // serial_Debug();
   Wheel_drive(PWM, SCA, SCB);
 
   //get and print speed value
-  float rpmA, rpmB;
-  if (encoderSampleRPM(rpmA, rpmB)) {
-    Serial.print("SpeedA: "); Serial.print(rpmA); Serial.print(" RPM, ");
-    Serial.print("SpeedB: "); Serial.print(rpmB); Serial.println(" RPM");
-  }
+  // float rpmA, rpmB;
+  // if (encoderSampleRPM(rpmA, rpmB)) {
+  //   Serial.print("SpeedA: "); Serial.print(rpmA); Serial.print(" RPM, ");
+  //   Serial.print("SpeedB: "); Serial.print(rpmB); Serial.println(" RPM");
+  // }
   
   //print mpu6050 value
   imuPollAndPrint();
@@ -50,4 +52,9 @@ void loop() {
   //PID
   PWM = PID_PWMcount();
   Bluetooth_Debug();
+  
+  if (millis() - lastSend > 500) {
+        lastSend = millis();
+        sendTelemetry();
+    }
 }

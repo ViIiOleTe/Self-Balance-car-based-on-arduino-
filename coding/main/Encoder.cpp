@@ -49,7 +49,7 @@ void readEncoderB() {
 }*/
 
 bool encoderSampleRPM(float& rpmA, float& rpmB) {
-  if (millis() - lastTimeMs < 1000) return false;
+  if (millis() - lastTimeMs < 10) return false;
 
   noInterrupts();
   long countA = pulse_countA;
@@ -59,8 +59,10 @@ bool encoderSampleRPM(float& rpmA, float& rpmB) {
   interrupts();
 
   const float ticks_per_rev = pulses_per_rev * gear_ratio; // 输出轴一圈脉冲数
-  rpmA = (countA * 60.0) / ticks_per_rev;  // 1s 窗口：count / ticks * 60
-  rpmB = (countB * 60.0) / ticks_per_rev;
+  float dt = (millis() - lastTimeMs) / 1000.0;
+  rpmA = -(countA / ticks_per_rev) / dt * 60.0;
+  rpmB = (countB / ticks_per_rev) / dt * 60.0;
+
 
   lastTimeMs = millis();
   return true;

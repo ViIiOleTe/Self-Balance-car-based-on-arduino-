@@ -35,14 +35,14 @@ static void MOTOR_logic(int P1, int P2, int PWM_pin, int pwmx, int SC){
   }
 
   if (pwmx > 0){ //forward rotation
-    digitalWrite(P1, HIGH);
-    digitalWrite(P2, LOW);
+    digitalWrite(P1, LOW);
+    digitalWrite(P2, HIGH);
     analogWrite(PWM_pin, pwmx+SC);
   }
 
    if (pwmx < 0){ //backward rotation
-    digitalWrite(P1, LOW);
-    digitalWrite(P2, HIGH);
+    digitalWrite(P1, HIGH);
+    digitalWrite(P2, LOW);
     analogWrite(PWM_pin, -(pwmx-SC));
   }
 }
