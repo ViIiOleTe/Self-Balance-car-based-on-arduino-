@@ -8,7 +8,7 @@ static uint32_t lastPrintMs = 0;
 void init_mpu(){
   Wire.begin();
   mpu.begin(); 
-  mpu.calcGyroOffsets(true);//need tuning
+  mpu.calcGyroOffsets(-1.21, 0.74, 0.21);//need tuning
 }
 
 void get_angle(float &x, float &y, float &z){
@@ -42,11 +42,11 @@ void get_dataX(float &Ang_x, float &Acc_x, float &Gyro_x){
 bool imuPollAndPrint() {
   mpu.update();
   uint32_t now = millis();
-  if (now - lastPrintMs < 50) return false;
+  if (now - lastPrintMs < 1000) return false;
 
   lastPrintMs = now;
   Serial.print("angleX: "); Serial.print(mpu.getAngleX());
-  Serial.print("  AccX: ");  Serial.print(mpu.getAccX());
-  Serial.print("  GyroX: "); Serial.println(mpu.getGyroX());
+  // Serial.print("  AccX: ");  Serial.print(mpu.getAccX());
+  // Serial.print("  GyroX: "); Serial.println(mpu.getGyroX());
   return true;
 }

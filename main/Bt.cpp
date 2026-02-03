@@ -22,3 +22,7 @@ void btWrite(char c) {
 void btWriteString(const char* s) {
     BT.print(s);
 }
+
+void btWriteFloat(float f) {
+    BT.print(f);
+}

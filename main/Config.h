@@ -25,7 +25,7 @@
 
 // ===== Encoder constants =====
 const int   pulses_per_rev = 11;     // per motor shaft
-const float gear_ratio     = 89.6/4.667;  // gearbox
+const float gear_ratio     = 20; //89.6/4.667;  // gearbox ratio
 
 // ===== Shared variables (defined in main.ino) =====
 extern int PWM;
